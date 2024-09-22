@@ -1,6 +1,3 @@
-# OPENAI API KEY: sk-proj-ypNnfQi6oaP6ly1Bixu3T3BlbkFJcJH45LDIq1ytayVhvc1R
-# GEMINI API KEY: AIzaSyAtVTHqUxiSjfyzhOUM9vWpe47UOU7Ej7U
-
 # turns out we needed to use 'pip install -q -U google-generativeai'
 
 # chatgpt api: https://platform.openai.com/docs/guides/images/introduction
@@ -8,10 +5,15 @@
 import google.generativeai as genai
 from PIL import Image, ImageEnhance
 import os, json
+from dotenv import load_dotenv
 
-genai.configure(
-    api_key="AIzaSyAtVTHqUxiSjfyzhOUM9vWpe47UOU7Ej7U")  # very first request
+load_dotenv()
 
+API_KEY = os.getenv('API_KEY')
+if not API_KEY:
+    raise ValueError("API key not found. Please ensure it is set in the .env file.")
+
+genai.configure(api_key=API_KEY)
 
 # define a function to upload an image to gemini
 def upload_img(image_path, mime_type=None):
